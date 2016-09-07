@@ -1,0 +1,1310 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Utility;
+using System.IO;
+using System.IO.Ports;
+
+
+namespace LCD16x2
+{
+
+
+
+    public partial class Form1 : Form
+    {
+
+        /// <summary>
+        /// KeyboardMode = 0 i.e; Command Mode
+        /// KeyboardMode = 1 i.e; Char Mode
+        /// KeyboardMode = 2 i.e; String Mode
+        /// </summary>
+       
+
+        
+        public uint stage = 0;
+        public uint F_state = 0;
+        public uint F1_state = 0;
+        public uint F2_state = 0;
+        public uint F4_state = 0;
+        public uint F8_state = 0;
+        public uint F11_state = 0;
+        public int key_press = 0;
+        /// <summary>
+        /// Frame Area
+        /// </summary>
+
+        public bool shouldChangeDatabase = false;
+        public bool shouldChangeDataSetting = false;
+        
+        
+        public Stack<uint> FrameBaseHistory = new Stack<uint>();
+        public Stack<uint> FrameIdHistory = new Stack<uint>();
+
+        public uint KeyboardtoFrameID(string str) {
+            
+
+             //Frame ID
+            switch (str) {
+                case "F1":
+                    if (key_press == 0)
+                    {
+                        F_state = 1;
+                        key_press = 1;
+                        stage = 1;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F2":
+                    if (key_press == 0)
+                    {
+                        F_state = 2;
+                        key_press = 1;
+                        stage = 2;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+
+                case "F3":
+                    if (key_press == 0)
+                    {
+                        F_state = 3;
+                        key_press = 1;
+                        stage = 3;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F4":
+                    if (key_press == 0)
+                    {
+                        F_state = 4;
+                        key_press = 1;
+                        stage = 4;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F5":
+                    if (key_press == 0)
+                    {
+                        F_state = 5;
+                        key_press = 1;
+                        stage = 5;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F6":
+                    if (key_press == 0)
+                    {
+                        F_state = 6;
+                        key_press = 1;
+                        stage = 6;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F7":
+                    if (key_press == 0)
+                    {
+                        F_state = 7;
+                        key_press = 1;
+                        stage = 7;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F8":
+                    if (key_press == 0)
+                    {
+                        F_state = 8;
+                        key_press = 1;
+                        stage = 8;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F9":
+                    if (key_press == 0)
+                    {
+                        F_state = 9;
+                        key_press = 1;
+                        stage = 9;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F10":
+                    if (key_press == 0)
+                    {
+                        F_state = 10;
+                        key_press = 1;
+                        stage = 10;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+
+                case "F11":
+                    if (key_press == 0)
+                    {
+                        F_state = 11;
+                        key_press = 1;
+                        stage = 11;
+                        FrameBaseHistory.Push(stage);
+
+
+                    }
+                    break;
+
+                case "F12":
+                    if (key_press == 0)
+                    {
+                        F_state = 12;
+                        key_press = 1;
+                        stage = 12;
+                        FrameBaseHistory.Push(stage);
+
+
+                    }
+                    break;
+
+                case "D1":{
+                    if (key_press == 1)
+                    {
+                        key_press = ++;
+                        stage = (100 * F_state) + 1;
+                        F_state = stage;
+                        FrameBaseHistory.Push(stage);
+
+                    }
+                    break;
+                }
+                    
+                case "D2":
+                {
+                    if (key_press == 1)
+                    {
+                        key_press = 2;
+                        stage = (100 * F_state) + 2;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+                }
+                case "D3":
+                {
+                    if (key_press == 1)
+                    {
+                        key_press = 2;
+                        stage = (100 * F_state) + 3;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+                }
+                case "D4":
+                {
+                    if (key_press == 1)
+                    {
+                        key_press = 2;
+                        stage = (100 * F_state) + 4;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+                }
+                case "D5":
+                {
+                    if (key_press == 1)
+                    {
+                        key_press = 2;
+                        stage = (100 * F_state) + 5;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+                }
+                case "D6":
+                {
+                    if (key_press == 1)
+                    {
+                        key_press = 2;
+                        stage = (100 * F_state) + 6;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+                }
+                case "D7":
+                {
+                    if (key_press == 1)
+                    {
+                        key_press = 2;
+                        stage = (100 * F_state) + 7;
+                        FrameBaseHistory.Push(stage);
+                    }
+                    break;
+
+                }
+                case "D8":
+                    {
+                        if (key_press == 1)
+                        {
+                            key_press = 2;
+                            stage = (100 * F_state) + 8;
+                            FrameBaseHistory.Push(stage);
+                        }
+                        break;
+                    }
+                case "D9":
+                    {
+                        if (key_press == 1)
+                        {
+                            key_press = 2;
+                            stage = (100 * F_state) + 9;
+                            FrameBaseHistory.Push(stage);
+                        }
+                        break;
+                    }
+
+                case "Delete": {
+                    key_press = 0;
+                    F_state = 0;
+                    stage = 0;
+                    FrameBaseHistory.Clear();
+                    break;
+                }
+                case "Escape":
+                    {
+                        key_press --;
+                        if (key_press <= 0) { 
+                            key_press = 0;   
+                        }
+
+                        if(FrameBaseHistory.Count > 0)
+                            FrameBaseHistory.Pop();
+
+                        if (FrameBaseHistory.Count > 0)
+                        {
+                            stage = FrameBaseHistory.Pop();
+                            FrameBaseHistory.Push(stage);
+                        }
+                        else {
+                            stage = 0;
+                        }
+
+                        
+                        break;
+                    }
+                case "Ret": {
+                    
+                    if (LCDFrameProcessor.FrameBase == 101) {
+                        //LCDFrameProcessor.startOperation(29850);
+                        if (!ProcessData.IsSpaceAvailable(LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID))
+                        {   //No User  Doesn't Exist ..Want to Create;
+                            FrameBaseHistory.Push(10110);
+                            stage = 10110;
+                            key_press++;
+                        }
+                        else {
+                            //User Exist..Want to Delete
+                            FrameBaseHistory.Push(10120);
+                            stage = 10120;
+                            key_press++;
+                        }
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 10112)
+                    {
+                        //New Member Added.....After Few MS go to 101
+                        FrameBaseHistory.Push(10113);
+                        stage = 10113;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 102) {
+                        if (!ProcessData.IsSpaceAvailable(LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID))
+                        {   //No User  Doesn't Exist ..Want to Create;
+                            FrameBaseHistory.Push(10110);
+                            stage = 10110;
+                            key_press++;
+                        }
+                        else
+                        {
+                            //User Exist..Modify
+                            //Detail Page
+                            FrameBaseHistory.Push(10210);
+                            stage = 10210;
+                            key_press++;
+                        }
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 10210) {
+                        //Added ....After few ms Go
+                        FrameBaseHistory.Push(10211);
+                        stage = 10211;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 3)
+                    {
+                        //Date and Time Updated
+                        FrameBaseHistory.Push(301);
+                        stage = 301;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 7) {
+                        FrameBaseHistory.Push(701);
+                        stage = 701;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 40110)
+                    {
+                        //Do Change Operation and if sucessfull return 40111 and make comitt flag  true;
+                        //if change unsuessfull return 40112 and make comitt flag false
+                        FrameBaseHistory.Push(40111);
+                        stage = 40111;
+                        key_press++;
+
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 402)
+                    {
+                        FrameBaseHistory.Push(40210);
+                        stage = 40210;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 403)
+                    {
+                        FrameBaseHistory.Push(40310);
+                        stage = 40310;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 404)
+                    {
+                        FrameBaseHistory.Push(40410);
+                        stage = 40410;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 405)
+                    {
+                        FrameBaseHistory.Push(40510);
+                        stage = 40510;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 40610)
+                    {
+                        //Do Change Operation and if sucessfull return 40611 and make comitt flag  true;
+                        //if change unsuessfull return 40612 and make comitt flag false
+                        FrameBaseHistory.Push(40611);
+                        stage = 40611;
+                        key_press++;
+                    }
+                    break;
+                
+                }
+                case "Yes": {
+
+                    if (LCDFrameProcessor.FrameBase == 10110) { 
+                        //Created ...Want to Add New Member
+                        FrameBaseHistory.Push(10111);
+                        stage = 10111;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 10111) { 
+                        //New Member Data Entry Frame
+                        FrameBaseHistory.Push(10112);
+                        stage = 10112;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 10120) { 
+                        //Deleted and go to F1
+                        FrameBaseHistory.Push(10121);
+                        stage = 10121;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 401) {
+                        FrameBaseHistory.Push(40110);
+                        stage = 40110;
+                        key_press++;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 406) {
+                        FrameBaseHistory.Push(40610);
+                        stage = 40610;
+                        key_press++;
+                    }
+                    break;
+                }
+                case "No": {
+                    if (LCDFrameProcessor.FrameBase == 10110)
+                    {
+                        //Created ...Want to Add New Member
+                        FrameBaseHistory.Pop();
+                        FrameBaseHistory.Pop();
+                        stage = 1;
+                        key_press = 1;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 10111)
+                    {
+                        //New Member Data Entry Frame
+                        FrameBaseHistory.Pop();
+                        FrameBaseHistory.Pop();
+                        FrameBaseHistory.Pop();
+                        stage = 1;
+                        key_press = 1;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 10120)
+                    {
+                        //Deleted and go to F1
+                        FrameBaseHistory.Pop();
+                        FrameBaseHistory.Pop();
+                        stage = 1;
+                        key_press = 1;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 401) {
+                        FrameBaseHistory.Pop();
+                        stage = 4;
+                        key_press = 1;
+                    }
+                    else if (LCDFrameProcessor.FrameBase == 406)
+                    {
+                        FrameBaseHistory.Pop();
+                        stage = 4;
+                        key_press = 1;
+                    }
+                    break;
+                }
+
+                default: { break; }
+            }
+            textBox1.Text += " " +FrameBaseHistory.Count.ToString() + " " + stage.ToString() + " :";
+            return stage;
+        }
+
+        
+        #region DllImports
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern bool SetPinAltFn(Int32 pinNum, Int32 altFn, bool dirOut);
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern void InitGPIOLib();
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern bool SetPinLevel(Int32 gpioNum, Int32 val);
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern void DeInitGPIOLib();
+
+
+
+
+        #endregion
+
+        #region PinDetailsofLCD
+        /*  D0 - 98
+         *  D1 - 133
+         *  D2 - 103
+         *  D3 - 101
+         *  D4 - 97
+         *  D5 - 85
+         *  D6 - 79
+         *  D7 - 45
+         * 
+         * 
+         *   EN - 28
+         *   RS - 30
+         */
+
+        #endregion
+
+        public Form1()
+        {
+            InitializeComponent();
+            Load += new EventHandler(Form1_Load);
+        }
+        
+        
+        //For Clock on Desktop or HomePage
+        Thread BackTimer;
+        
+        
+
+        HookKeys hook = new HookKeys();
+        public delegate void HookEvent(HookEventArgs hookArgs, KeyBoardInfo keyBoardInfo);
+        public HookEvent he;
+
+        public delegate void UpdateUI(string message);
+        static UpdateUI uui;
+
+        public delegate void CommandDetected(string keyMessage);
+        public event CommandDetected SuscribeCommandDetected;
+
+        public delegate void CharDetected(string keyMessage);
+        public event CharDetected SuscribeCharDetected;
+
+        public delegate void StringDetected(string keyMessage);
+        public event StringDetected SuscribeStringDetected;
+
+        //For UART
+       
+        public string portdata1;
+        public string portdata2;
+
+        public Int32 numberOfBytesRead = 0;
+        public Int32 currentlyOpenedPort = 0;
+        public SerialPort comPort1, comPort2, comPort3;
+
+
+        void Form1_Load(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            InitGPIOLib();
+            SetPinAltFn(45, -1, true);
+            SetPinAltFn(79, -1, true);
+            SetPinAltFn(85, -1, true);
+            SetPinAltFn(97, -1, true);
+
+            SetPinAltFn(101, -1, true);
+            SetPinAltFn(103, -1, true);
+            SetPinAltFn(133, -1, true);
+            SetPinAltFn(98, -1, true);
+
+            SetPinAltFn(28, -1, true);
+            SetPinAltFn(30, -1, true);
+
+            SetPinLevel(28, 0);
+            SetPinLevel(30, 0);
+
+            
+            
+            
+            BackTimer = new Thread(BackTimer_Work);
+            BackTimer.IsBackground = true;
+
+            
+
+
+            he = HookEventProc;
+            hook.HookEvent += new HookKeys.HookEventHandler(he);
+            hook.Start();
+            uui = updateUImethod;
+
+
+
+
+
+            comPort1 = new SerialPort();
+            comPort2 = new SerialPort();
+            comPort3 = new SerialPort();
+
+            LCDFrameProcessor.HomeStartedSubscriberEvent += StartBackThread;
+            LCDFrameProcessor.HomeStopSubscriberEvent += StopBackThread;
+            SuscribeCommandDetected += CommandProcessor;
+            SuscribeCharDetected += CharProcessor;
+            SuscribeStringDetected += StringProcessor;
+
+            //InitDatabase
+            ProcessData.ExceptionHandlerProcessDataClassEvent += ProcessDataClassExceptionCatcher;
+            ProcessData.ProcessDataClassThreadCompletedEvent += ProcessDataThreadCompleted;
+
+            ProcessData.InitDatabase();
+
+            ProcessData.ds.ReadXml(ProcessData.path + @"\Users.xml");
+
+            //First time Initilization
+            LCDFunctions.InitLCD();
+            LCDFrameProcessor.FrameBase = 1; //Important to Make FrameBase 1 When Application Starts
+            CommandProcessor("Delete"); //Replace "Delete" with "Home" if Home Key is Available
+
+            
+        }
+
+        public void StartBackThread()
+        {
+            //textBox1.Text = DateTime.Now.ToString("hh:mm:ss tt").ToString();
+            BackTimer = new Thread(BackTimer_Work);
+            BackTimer.IsBackground = true;
+            BackTimer.Priority = ThreadPriority.AboveNormal;
+            BackTimer.Start();
+        }
+
+        public void StopBackThread() {
+            BackTimer.Abort();
+        }
+
+        public void Open_Port() {
+            comPort1.PortName = "COM1:";
+            comPort1.BaudRate = 9600;
+            comPort1.Parity = Parity.None;
+            comPort1.DataBits = 8;
+            comPort1.StopBits = StopBits.One;
+            comPort1.Handshake = Handshake.None;
+            comPort1.ReadTimeout = 500;
+            comPort1.WriteTimeout = 500;
+
+            comPort2.PortName = "COM2:";
+            comPort2.BaudRate = 9600;
+            comPort2.Parity = Parity.None;
+            comPort2.DataBits = 8;
+            comPort2.StopBits = StopBits.One;
+            comPort2.Handshake = Handshake.None;
+            comPort2.ReadTimeout = 500;
+            comPort2.WriteTimeout = 500;
+
+
+            try
+            {
+                comPort1.Open();                         ///< Open COM port 1
+                comPort2.Open();                                        ///
+                numberOfBytesTimer.Enabled = true;       ///< Start timer
+            }
+            catch
+            {
+                MessageBox.Show("Could not open COM Port");
+            }
+
+
+        }
+
+        private void numberOfBytesTimer_Tick(object sender, EventArgs e)
+        {
+            String portData1;
+            String portData2;
+                          ///< COM port 1 selected
+                    try
+                    {
+                        portData1 = comPort1.ReadExisting();
+                       
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Could not read COM Port");
+                    }
+                         ///< COM port 2 selected
+                    try
+                    {
+                        portData2 = comPort2.ReadExisting();
+                        
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Could not read COM Port");
+                    }
+                   
+            }
+
+
+        #region LCD Region
+        private void printButton_Click(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private void lcdClearButton_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void textBoxLCD_KeyDown(object sender, KeyEventArgs e)
+        {
+           
+        }
+
+        #endregion
+
+        #region ExceptionCatherFromOtherClass
+
+        public void ProcessDataClassExceptionCatcher(string str) {
+            MessageBox.Show(" From ProcessDataClass \n " + str);
+        }
+
+        #endregion
+
+        #region MenuButtons
+
+        private void menuItem_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void menuItem_about_Click(object sender, EventArgs e)
+        {
+            about Form2 = new about();
+            Form2.Show();
+
+        }
+
+        #endregion
+
+        public void BackTimer_Work(){
+            
+            while(true){
+
+                    //LCDFunctions.InitLCD();
+                   // LCDFunctions.clearLCD();                            
+                    
+                    /*LCDFunctions.gotoLCD(0, 0);
+                    LCDFunctions.sendString("Data Processing Unit");
+                    LCDFunctions.gotoLCD(7, 1);
+                    LCDFunctions.sendString("Ver.:1.0");
+                     */
+
+
+                while (LCDFunctions.LCDLock == true) {
+                    Thread.Sleep(50);
+                }
+
+                LCDFunctions.LCDLock = true;
+                    LCDFunctions.gotoLCD(6, 2);
+                    LCDFunctions.sendString(DateTime.Now.ToString("dd:MM:yy"));
+
+                    LCDFunctions.gotoLCD(6, 3);
+                    LCDFunctions.sendString(DateTime.Now.ToString("hh:mm:ss tt"));
+
+                    LCDFunctions.LCDLock = false;
+                    Thread.Sleep(350);
+            }
+        }
+
+        
+
+        #region KeyHooKupPro
+
+        static void HookEventProc(HookEventArgs hookArgs, KeyBoardInfo keyBoardInfo)
+        {
+            //System.Diagnostics.Debug.WriteLine("Hook called");
+            string s = ((Keys)keyBoardInfo.vkCode).ToString();
+            uui(s);
+        }
+        public void updateUImethod(string message)
+        {
+            //Code Here WhateveryOU wANT TO !!
+
+            textBox2.Text = message;
+
+            if (LCDFrameProcessor.KeyboardMode == 0)
+            {
+                //Command Mode
+                SuscribeCommandDetected(message);
+                //textBox1.Text = "Still 0";
+
+            }
+
+            else if (LCDFrameProcessor.KeyboardMode == 1)
+            { 
+                //Char Mode
+                SuscribeCharDetected(message);
+                LCDFrameProcessor.KeyboardMode = 0;
+
+            }
+            else if (LCDFrameProcessor.KeyboardMode == 2)
+            { 
+                //String Mode
+                if (message == "Return")
+                {
+                    LCDFrameProcessor.KeyboardMode = 0;
+                    LCDFrameProcessor.LCDrefreshFlag = false;
+                    LCDFrameProcessor.keyboardNumMode = false;
+                    LCDFrameProcessor.keyboardMaxChar = 0;
+                    SuscribeStringDetected(" ");
+                }
+                else if (message == "Tab") { 
+                    //Switch Between Different Frame in Same Frame
+                    if (LCDFrameProcessor.ActiveFrameInfo.IsInput)
+                    {
+                        LCDFrameProcessor.FindNextInputInFrame(true);
+                    }
+
+                }
+                else if (message == "Escape")
+                {
+                    LCDFrameProcessor.KeyboardMode = 0;
+                    LCDFrameProcessor.LCDrefreshFlag = false;
+                    LCDFrameProcessor.keyboardNumMode = false;
+                    LCDFrameProcessor.keyboardMaxChar = 0;
+                    SuscribeCommandDetected(message);
+                }
+                else
+                {
+
+                    if (LCDFrameProcessor.keyboardNumMode)
+                    {
+                        //  KeyBoard is in NUM MODE, Ony Numbers Accepted
+                        if (message == "D1" || message == "D2" || message == "D3" || message == "D4" || message == "D5" || message == "D6" || message == "D7" || message == "D8" || message == "D9" || message == "D0")
+                        {
+                            LCDFrameProcessor.ActiveFrameInfo.UpdateInfo = message.TrimStart(new char[] { 'D' });
+                            if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 4)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.day.ToString().Length == 2)
+                                {
+                                    LCDFrameProcessor.FindNextInputInFrame(true);
+                                }
+                            }
+                            else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 5)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.month.ToString().Length == 2)
+                                {
+                                    LCDFrameProcessor.FindNextInputInFrame(true);
+                                }
+                            }
+                            else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 7)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.hour.Length == 2)
+                                {
+                                    LCDFrameProcessor.FindNextInputInFrame(true);
+                                }
+                            }
+                            else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 8)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.minute.Length == 2)
+                                {
+                                    LCDFrameProcessor.FindNextInputInFrame(true);
+                                }
+                            }
+                        }
+                        else if (message == "Back")
+                        {
+                            if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 5)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.month.ToString().Length == 0)
+                                {
+                                    if (LCDFrameProcessor.ActiveFrameInfo.day.Length == 2)
+                                        LCDFrameProcessor.ActiveFrameInfo.day = LCDFrameProcessor.ActiveFrameInfo.day.Remove((LCDFrameProcessor.ActiveFrameInfo.day.Length - 1), 1);
+                                    LCDFrameProcessor.FindNextInputInFrame(false);
+                                }
+                                else {
+                                    string x = LCDFrameProcessor.ActiveFrameInfo.UpdateInfo;
+                                }
+                            }
+                            else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 6)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.year.ToString().Length == 0)
+                                {
+                                    if (LCDFrameProcessor.ActiveFrameInfo.month.Length == 2)
+                                        LCDFrameProcessor.ActiveFrameInfo.month = LCDFrameProcessor.ActiveFrameInfo.month.Remove((LCDFrameProcessor.ActiveFrameInfo.month.Length - 1), 1);
+                                    LCDFrameProcessor.FindNextInputInFrame(false);
+                                }
+                                else
+                                {
+                                    string x = LCDFrameProcessor.ActiveFrameInfo.UpdateInfo;
+                                }
+                            }
+                            else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 8)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.minute.ToString().Length == 0)
+                                {
+                                    if (LCDFrameProcessor.ActiveFrameInfo.hour.Length == 2)
+                                        LCDFrameProcessor.ActiveFrameInfo.hour = LCDFrameProcessor.ActiveFrameInfo.hour.Remove((LCDFrameProcessor.ActiveFrameInfo.hour.Length - 1), 1);
+                                    LCDFrameProcessor.FindNextInputInFrame(false);
+                                }
+                                else
+                                {
+                                    string x = LCDFrameProcessor.ActiveFrameInfo.UpdateInfo;
+                                }
+                            }
+                            else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 9)
+                            {
+                                if (LCDFrameProcessor.ActiveFrameInfo.second.ToString().Length == 0)
+                                {
+                                    if (LCDFrameProcessor.ActiveFrameInfo.minute.Length == 2)
+                                        LCDFrameProcessor.ActiveFrameInfo.minute = LCDFrameProcessor.ActiveFrameInfo.minute.Remove((LCDFrameProcessor.ActiveFrameInfo.minute.Length - 1), 1);
+                                    LCDFrameProcessor.FindNextInputInFrame(false);
+                                }
+                                else
+                                {
+                                    string x = LCDFrameProcessor.ActiveFrameInfo.UpdateInfo;
+                                }
+                            }
+                            else
+                            {
+                                string x = LCDFrameProcessor.ActiveFrameInfo.UpdateInfo;
+                            }
+                        }
+                        else if (message == "Left" || message == "Right") {
+                           if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 11 || LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 10 || LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 17 ||LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 18 ||LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 19) {
+                                LCDFrameProcessor.ActiveFrameInfo.UpdateInfo = message;
+                           }
+                           else if (LCDFrameProcessor.ActiveFrameInfo.WhichDataInFrame == 15) {
+                               LCDFrameProcessor.ActiveFrameInfo.UpdateInfo = message;
+                           }
+                        }
+
+                        
+                    }
+                    else { 
+                    
+                        //No Keyboard is Not in Num Mode
+
+                        if (message == "D1" || message == "D2" || message == "D3" || message == "D4" || message == "D5" || message == "D6" || message == "D7" || message == "D8" || message == "D9" || message == "D0")
+                        {
+                            LCDFrameProcessor.ActiveFrameInfo.UpdateInfo = message.TrimStart(new char[] { 'D' });
+                        }
+                        else if (message == "Back")
+                        {
+                            string x = LCDFrameProcessor.ActiveFrameInfo.UpdateInfo;
+                        }
+                        else if (message == "Space")
+                        {
+                            LCDFrameProcessor.ActiveFrameInfo.UpdateInfo = " ";
+                        }
+                        else if (message != "Capital")
+                        {
+                            LCDFrameProcessor.ActiveFrameInfo.UpdateInfo = message;
+                        }
+                    }
+
+
+                    ////////
+                    SuscribeCharDetected(message);
+                   
+                }
+                    
+            }
+             
+
+        }
+
+        #endregion
+
+
+        public void StringProcessor(string str)
+        {
+            CommandProcessor("Return");
+        }
+
+        public void CommandProcessor(string str)
+        {
+            
+            //Dont Refresh LCD Unless New FrameBack
+            //Call KeyboardtoFrameID just Once;
+            uint TempFrameBase = 50000;
+
+            if (str == "Return") {
+                TempFrameBase = KeyboardtoFrameID("Ret");
+                if (TempFrameBase == 10113) {
+                    if (ProcessData.UpdateInDataBase(LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID, LCDFrameProcessor.ActiveFrameInfo.FrameData_Name, LCDFrameProcessor.ActiveFrameInfo.FrameData_Phone, false)) {
+                        //ProcessData.SaveChanges();
+                        shouldChangeDatabase = true;
+                    }
+                }
+                else if (TempFrameBase == 10211) {
+                    if (ProcessData.UpdateInDataBase(LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID, LCDFrameProcessor.ActiveFrameInfo.FrameData_Name, LCDFrameProcessor.ActiveFrameInfo.FrameData_Phone, false))
+                    {
+                        //Modify or Update in Database
+                        //ProcessData.SaveChanges();
+                        shouldChangeDatabase = true;
+                    }
+                }else if(TempFrameBase == 301){
+                    //Time Updated
+                    textBox1.Text = "Time Updated ! Buddy";
+                }
+                else if (TempFrameBase == 40210) { 
+                    //change Screen Title and Turn on the Comiit Flag
+                }
+
+            }
+            else if (str == "Y" || str == "y") {
+                TempFrameBase = KeyboardtoFrameID("Yes");
+                if (TempFrameBase == 10111) {
+                    if (ProcessData.UpdateInDataBase(LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID,"","",false)) {
+                       // ProcessData.SaveChanges();
+                        shouldChangeDatabase = true;
+                    }
+                }else if(TempFrameBase == 10121){
+                    if (ProcessData.UpdateInDataBase(LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID, "", "", true))
+                    {
+                       // ProcessData.SaveChanges();
+                        shouldChangeDatabase = true;
+                    }
+                }
+                
+            }
+            else if (str == "N" || str == "n")
+            {
+                TempFrameBase = KeyboardtoFrameID("No");
+            }
+            else
+            {
+                TempFrameBase = KeyboardtoFrameID(str); ;
+            }
+
+
+            if (!(TempFrameBase == LCDFrameProcessor.FrameBase))
+            {
+
+                LCDFrameProcessor.startOperation(TempFrameBase);
+            }
+
+            if (shouldChangeDatabase) {
+                shouldChangeDatabase = false;
+                ProcessData.SaveChanges();
+            }
+
+            if (shouldChangeDataSetting) {
+                shouldChangeDataSetting = false;
+                //Do Operation
+            }
+
+            if (LCDFrameProcessor.FrameBase == 10113) {
+                //Added
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                KeyboardtoFrameID("Escape");
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+
+            }
+            else if (LCDFrameProcessor.FrameBase == 10121)
+            {
+                //Deleted
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 10211)
+            {
+                //Modified
+                Thread.Sleep(500);
+                //Go to 102
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 301)
+            {
+                //Time Updated
+                Thread.Sleep(500);
+                //Go to 00 Home
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 40111 || LCDFrameProcessor.FrameBase == 40112) {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 40210)
+            {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 40310)
+            {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 40410)
+            {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 40510)
+            {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 40611 || LCDFrameProcessor.FrameBase == 40612) {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            else if (LCDFrameProcessor.FrameBase == 701) {
+                Thread.Sleep(500);
+                KeyboardtoFrameID("Escape");
+                LCDFrameProcessor.startOperation(KeyboardtoFrameID("Escape"));
+            }
+            
+        }
+
+        public void CharProcessor(string str) {
+
+            LCDFrameProcessor.RefreshFrame();
+            //textBox1.Text = LCDFrameProcessor.ActiveFrameInfo.FrameData_UserID.ToString();
+        }
+
+
+        //This function Executed Whenever Some Assinged Database work is Finished
+        public void ProcessDataThreadCompleted(uint _id, string _name, string _phone, bool _isSucess, string _message)
+        {
+            LCDFrameProcessor.ActiveFrameInfo.FrameData_Name = _name; //Data[0].ToString();
+            LCDFrameProcessor.ActiveFrameInfo.FrameData_Phone = _phone;//Data[1].ToString();
+            LCDFrameProcessor.startOperation(2985);
+        }
+        
+
+
+        private void Form1_Closing(object sender, CancelEventArgs e)
+        {
+            while (ProcessData.Semaphore) {
+                Thread.Sleep(1000);
+            }
+
+            comPort1.Close();
+            comPort2.Close();
+        }
+
+}
+
+    
+
+    
+    static class LCDFunctions
+    {
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern bool SetPinAltFn(Int32 pinNum, Int32 altFn, bool dirOut);
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern void InitGPIOLib();
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern bool SetPinLevel(Int32 gpioNum, Int32 val);
+
+        [DllImport("GPIOLib.dll", CharSet = CharSet.Auto)]
+        public static extern void DeInitGPIOLib();
+
+        //Better Use this Class in BackGround Thread;
+
+        public static bool LCDLock = false;
+
+        private static void PutaByte(int value)
+        {
+            int tempVal = value;
+            //string CheckVal = "";
+
+            //Setting Each Bits
+            SetPinLevel(45, ((tempVal >> 3) & 0x01));
+            SetPinLevel(79, ((tempVal >> 2) & 0x01));
+            SetPinLevel(85, ((tempVal >> 1) & 0x01));
+            SetPinLevel(97, ((tempVal >> 0) & 0x01));
+
+            //SetPinLevel(101, ((tempVal >> 3) & 0x01));
+            //SetPinLevel(103, ((tempVal >> 2) & 0x01));
+            //SetPinLevel(133, ((tempVal >> 1) & 0x01));
+            //SetPinLevel(98, ((tempVal) & 0x01));
+            //MessageBox.Show(c.ToString());
+        }
+
+        public static void CursorON_OFF(bool _x) {
+            if (_x)
+            {
+                //Display ON, CURSOR ON, BLINKING ON
+                sendCommand(0x0f);
+                
+            }
+            else { 
+                //Display ON , CURSOR OFF, BLINKING OFF
+                sendCommand(0x0C);
+            }
+        }
+
+        public static void sendCommand(int value)
+        {
+            PutaByte(value>>4);
+            SetPinLevel(30, 0); //Set RS to 0 for Command Mode
+            SetPinLevel(28, 1); //Enable Pin Set
+            Thread.Sleep(1);
+            SetPinLevel(28, 0); //Enable Pin Reset
+            Thread.Sleep(1);
+            
+            PutaByte((value&0x0f));
+            SetPinLevel(30, 0); //Set RS to 0 for Command Mode
+            SetPinLevel(28, 1); //Enable Pin Set
+            Thread.Sleep(1);
+            SetPinLevel(28, 0); //Enable Pin Reset
+            Thread.Sleep(1);
+            
+        }
+        public static void sendData(int value)
+        {
+            PutaByte(value>>4);
+            SetPinLevel(30, 1); //Set RS to 1 for Data Mode
+            SetPinLevel(28, 1); //Enable Pin Set
+            Thread.Sleep(1);
+            SetPinLevel(28, 0); //Enable Pin Reset
+            
+            
+            PutaByte((value&0x0f));
+            SetPinLevel(30, 1); //Set RS to 1 for Data Mode
+            SetPinLevel(28, 1); //Enable Pin Set
+            Thread.Sleep(1);
+            SetPinLevel(28, 0); //Enable Pin Reset
+            
+           
+        }
+
+        public static void sendString(string s) {
+            int i = 0;
+            bool IsOnSecondLine = false;
+            foreach (char _s in s) {
+                i++;
+
+                if (i > 20 && !IsOnSecondLine)
+                {
+                    IsOnSecondLine = true;
+                    gotoLCD(0, 1);
+                }
+
+                sendData((int)_s);
+            }
+        }
+
+        public static void InitLCD() {
+
+            sendCommand(0x3);
+            sendCommand(0x2);
+            
+            sendCommand(0x28);
+              sendCommand(0x0C);
+            //sendCommand(0x01);
+            //sendCommand(0x02);
+            sendCommand(0x06);
+            //sendCommand(0x0F);
+            sendCommand(0x01);
+            
+            //Here Left Writing Initilization if LCD
+        }
+
+        public static void clearLCD() {
+            sendCommand(0x01);
+        }
+        public static void gotoLCD(int x, int y) {
+            if(y==0)
+                sendCommand(0x80 + x);
+            else if(y==2)
+                sendCommand(0x94 + x);
+            else if(y==1)
+                sendCommand(0xC0 + x);
+            else if(y==3)
+                sendCommand(0xd4 + x);
+            //sendCommand((0x80 + (x + (0x40 * y))));           
+        }
+
+        public static void printStringWithCmd(string s, int x, int y) { 
+            gotoLCD(x,y);
+            sendString(s);
+        }
+
+    }
+
+    
+
+        
+    
+}
